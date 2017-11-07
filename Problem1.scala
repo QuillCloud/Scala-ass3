@@ -17,8 +17,8 @@ object Problem1 {
     // get words for each line, a word only count once in one line
     val words = input.flatMap(line => line.toLowerCase().split("[\\s*$&#/\"'\\,.:;?!\\[\\](){}<>~\\-_]+").filter(_.nonEmpty).distinct)
     val w = words.filter(_.charAt(0) >= 'a').filter(_.charAt(0) <= 'z')
-    // make pairs and reduce by key
-    val counts = w.map(w => (w, 1)).reduceByKey(_+_)
+    // make pairs and reduce by key, then sorted by key
+    val counts = w.map(w => (w, 1)).reduceByKey(_+_).sortBy(f => f._1, true)
     // sort the pairs by value, transform them to format that desired and get top k pairs
     val output = counts.sortBy(f => f._2, false).map(f => f._1 + "\t" + f._2).take(k)
     // write result to output folder

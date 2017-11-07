@@ -15,9 +15,9 @@ object Problem2 {
     val input =  sc.textFile(inputFile)
     // split each line and make each line as a pair(second substring is key, first substring is value)
     val nodes = input.map(line=>(line.split("\\s+")(1), line.split("\\s+")(0)))
-    // reduce by key and sort, transform to the format that desired
-    val merge_nodes = nodes.reduceByKey(_+","+_).sortBy(f=>f._1,true).map(f=>f._1 + "\t" + f._2)
+    // sort the node, then reduce by key, then sort again, finally transform to the format that desired
+    val merge_nodes = nodes.sortBy(f=>f._2.toInt, true).reduceByKey(_+","+_).sortBy(f=>f._1.toInt,true).map(f=>f._1 + "\t" + f._2)
     // write result to folder
     merge_nodes.saveAsTextFile(outputFolder)
    }
-}
+}  
